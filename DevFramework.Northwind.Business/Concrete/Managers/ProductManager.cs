@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
-using DevFramework.Core.Aspects.PostSharp;
+using DevFramework.Core.Aspects.PostSharp.CacheAspects;
+using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
+using DevFramework.Core.Aspects.PostSharp.ValidationAspect;
+using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
 using DevFramework.Northwind.Business.Abstract;
 using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.DataAccess.Abstract;
 using DevFramework.Northwind.Entities.Concrete;
-using DevFramework.Core.Aspects;
 
 namespace DevFramework.Northwind.Business.Concrete.Managers
 {
@@ -17,6 +19,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
             _productDal = productDal;
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<Product> GetAll()
         {
             return _productDal.GetList();
@@ -28,6 +31,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         }
 
         [FluentValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public Product Add(Product product)
         {
             return _productDal.Add(product);
@@ -38,6 +42,12 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         public Product Update(Product product)
         {
             return _productDal.Update(product);
+        }
+
+        [TransactionScopeAspect]
+        public void TransactionalOperation(Product product1, Product product2)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
