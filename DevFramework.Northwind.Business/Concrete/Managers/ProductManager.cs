@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using DevFramework.Core.Aspects.PostSharp.CacheAspects;
+using DevFramework.Core.Aspects.PostSharp.LogAspects;
 using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
 using DevFramework.Core.Aspects.PostSharp.ValidationAspect;
 using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
+using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using DevFramework.Northwind.Business.Abstract;
 using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.DataAccess.Abstract;
@@ -45,9 +47,11 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         }
 
         [TransactionScopeAspect]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void TransactionalOperation(Product product1, Product product2)
         {
-            throw new System.NotImplementedException();
+            _productDal.Add(product1);
+            _productDal.Add(product2);
         }
     }
 }
