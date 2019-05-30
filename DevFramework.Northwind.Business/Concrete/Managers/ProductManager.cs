@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using DevFramework.Core.Aspects.PostSharp.CacheAspects;
-using DevFramework.Core.Aspects.PostSharp.LogAspects;
 using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
 using DevFramework.Core.Aspects.PostSharp.ValidationAspect;
 using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
-using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using DevFramework.Northwind.Business.Abstract;
 using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.DataAccess.Abstract;
@@ -24,6 +23,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<Product> GetAll()
         {
+            Thread.Sleep(3000);
             return _productDal.GetList();
         }
 
