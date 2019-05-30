@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using DevFramework.Core.Aspects.PostSharp.CacheAspects;
 using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
 using DevFramework.Core.Aspects.PostSharp.ValidationAspect;
@@ -23,7 +22,6 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<Product> GetAll()
         {
-            Thread.Sleep(3000);
             return _productDal.GetList();
         }
 

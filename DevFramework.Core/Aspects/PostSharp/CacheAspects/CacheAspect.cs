@@ -42,9 +42,11 @@ namespace DevFramework.Core.Aspects.PostSharp.CacheAspects
             {
                 args.ReturnValue = _cacheManager.Get<object>(key);
             }
-
-            base.OnInvoke(args);
-            _cacheManager.Add(key, args.ReturnValue, _cacheByMinute);
+            else
+            {
+                base.OnInvoke(args);
+                _cacheManager.Add(key, args.ReturnValue, _cacheByMinute);
+            }
         }
     }
 }
