@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DevFramework.Core.Aspects.PostSharp.AuthorizationAspects;
 using DevFramework.Core.Aspects.PostSharp.CacheAspects;
 using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
 using DevFramework.Core.Aspects.PostSharp.ValidationAspect;
@@ -20,6 +21,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        [SecuredOperation(Roles = "Admin, Editor")]
         public List<Product> GetAll()
         {
             return _productDal.GetList();
