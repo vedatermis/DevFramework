@@ -21,7 +21,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
-        [SecuredOperation(Roles = "Admin, Editor")]
+        [SecuredOperation(Roles = "Admin, Editor, Student")]
         public List<Product> GetAll()
         {
             return _productDal.GetList();
